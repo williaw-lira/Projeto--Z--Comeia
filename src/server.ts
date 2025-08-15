@@ -6,7 +6,17 @@ const app = fastify({
 
 });
 
+
+
 const port = Number( process.env.PORT )|| 3003;
 
+app.listen({port},(err, address)=>{
+    let anddress = port;
 
-app.listen()
+    if(err){
+        console.error(err)
+        process.exit(1)
+    }
+    console.log(`Server listening at ${address}`)
+
+})
