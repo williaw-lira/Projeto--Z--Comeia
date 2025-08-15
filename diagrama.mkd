@@ -1,0 +1,22 @@
+## 🗺 Arquitetura Visual
+
+```mermaid
+flowchart LR
+    U[Usuário / Apicultor] -->|Acessa| F[Frontend (Web/App)]
+    F -->|Requisições HTTP| A[API Backend - Fastify + TypeScript]
+    
+    A -->|Consulta / Grava| DB[(Banco de Dados)]
+    A -->|Integração| M[API de Mapas (Leaflet/Google Maps)]
+    
+    DB -->|Retorna dados| A
+    M -->|Retorna coordenadas e mapa| F
+
+    subgraph Banco de Dados
+        DB1[(Colmeias)]
+        DB2[(Produções)]
+        DB3[(Manutenções)]
+    end
+
+    DB1 --> DB
+    DB2 --> DB
+    DB3 --> DB
