@@ -1,22 +1,26 @@
-import fastify from 'fastify'
-import 'dotenv/config'
+import fastify from "fastify";
+import path from "path";
+import { fileURLToPath } from "url";
+import fastifyStatic from "@fastify/static";
 
-const app = fastify({
-    logger: true
+import routes from "./Routers/InicioRouter.ts";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const app = fastify({ logger: true });
+
+app.register(fastifyStatic, {
+    root: path.join(__dirname, "public"),
+    prefix: "/",
 });
 
+app.register(routes);
 
-
-const port = Number( process.env.PORT )|| 3003;
-
-app.listen({port},(err, address)=>{
-    let anddress = port;
-
-    if(err){
-        console.error(err)
-        process.exit(1)
+app.listen({ port: 3003 }, (err, address) => {
+    if (err) {
+        console.error(err);
+        process.exit(1);
     }
-    console.log(`Server listening at ${address}`)
-
-})
+    console.log(` rodando em ${address}`);
+});
